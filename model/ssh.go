@@ -23,7 +23,7 @@ func NewPasswordClientPassword(username, password, ip string) *ssh.Client {
 	}
 	client, err := ssh.Dial("tcp", ip+":22", config)
 	if err != nil {
-		log.Info("Failed to dial: ", err)
+		log.Warn("Failed to dial: ", err)
 		return nil
 	}
 	return client
@@ -60,8 +60,6 @@ func NewSshClientPublicKeys(rasPath string) {
 	}
 	defer session.Close()
 
-	// Once a Session is created, you can execute a single command on
-	// the remote side using the Run method.
 	var b bytes.Buffer
 	session.Stdout = &b
 	if err := session.Run("ls -lh"); err != nil {
